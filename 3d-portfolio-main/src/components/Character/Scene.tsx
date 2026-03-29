@@ -47,6 +47,9 @@ const Scene = () => {
       let headBone: THREE.Object3D | null = null;
       let screenLight: any | null = null;
       let mixer: THREE.AnimationMixer;
+      
+      // 🟢 FIX 1a: Initialize the ResizeObserver
+      let resizeObserver: ResizeObserver;
 
       const clock = new THREE.Clock();
 
@@ -59,15 +62,14 @@ const Scene = () => {
           const animations = setAnimations(gltf);
           hoverDivRef.current && animations.hover(gltf, hoverDivRef.current);
           mixer = animations.mixer;
-          let character = gltf.scene;
-          setChar(character);
-          scene.add(character);
-          headBone = character.getObjectByName("spine006") || null;
-          screenLight = character.getObjectByName("screenlight") || null;
+          let loadedCharacter = gltf.scene;
+          setChar(loadedCharacter);
+          scene.add(loadedCharacter);
+          headBone = loadedCharacter.getObjectByName("spine006") || null;
+          screenLight = loadedCharacter.getObjectByName("screenlight") || null;
 
-          // 🟢 FIX 1: Force an immediate resize calculation as soon as the model loads
-          // This prevents the "0 height" bug on initial load
-          handleResize(renderer, camera, canvasDiv, character);
+          // Force an immediate calculation on load
+          handleResize(renderer, camera, canvasDiv, loadedCharacter);
 
           progress.loaded().then(() => {
             setTimeout(() => {
@@ -76,9 +78,14 @@ const Scene = () => {
             }, 2500);
           });
           
-          window.addEventListener("resize", () =>
-            handleResize(renderer, camera, canvasDiv, character)
-          );
+          // 🟢 FIX 1b: Attach the ResizeObserver to watch the parent div
+          resizeObserver = new ResizeObserver(() => {
+            handleResize(renderer, camera, canvasDiv, loadedCharacter);
+          });
+
+          if (canvasDiv.current) {
+            resizeObserver.observe(canvasDiv.current);
+          }
         }
       });
 
@@ -116,11 +123,10 @@ const Scene = () => {
         landingDiv.addEventListener("touchend", onTouchEnd);
       }
 
-      // 🟢 FIX 2a: Declare a variable to store the animation frame ID
+      // 🟢 FIX 2: Memory Leak Prevention for RequestAnimationFrame
       let animationFrameId: number;
 
       const animate = () => {
-        // 🟢 FIX 2b: Assign the ID every time the frame is requested
         animationFrameId = requestAnimationFrame(animate);
         
         if (headBone) {
@@ -144,15 +150,18 @@ const Scene = () => {
       animate();
 
       return () => {
-        // 🟢 FIX 2c: Cancel the animation loop when the component unmounts
+        // 🟢 FIX 2 Cleanup
         cancelAnimationFrame(animationFrameId);
         
         clearTimeout(debounce);
         scene.clear();
         renderer.dispose();
-        window.removeEventListener("resize", () =>
-          handleResize(renderer, camera, canvasDiv, character!)
-        );
+        
+        // 🟢 FIX 1c: Disconnect the ResizeObserver safely
+        if (resizeObserver) {
+          resizeObserver.disconnect();
+        }
+
         if (canvasDiv.current) {
           canvasDiv.current.removeChild(renderer.domElement);
         }
