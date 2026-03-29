@@ -85,10 +85,6 @@ const SocialIcons = () => {
         rel="noreferrer"
         data-cursor="disable"
       >
-        href="/Akash_Malhotra.pdf"
-        target="_blank"
-        rel="noreferrer"
-      >
         <HoverLinks text="RESUME" />
         <span>
           <TbNotes />
