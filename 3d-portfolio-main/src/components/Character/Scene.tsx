@@ -20,6 +20,7 @@ const Scene = () => {
   const { setLoading } = useLoading();
 
   const [character, setChar] = useState<THREE.Object3D | null>(null);
+
   useEffect(() => {
     if (canvasDiv.current) {
       let rect = canvasDiv.current.getBoundingClientRect();
@@ -63,12 +64,18 @@ const Scene = () => {
           scene.add(character);
           headBone = character.getObjectByName("spine006") || null;
           screenLight = character.getObjectByName("screenlight") || null;
+
+          // 🟢 FIX 1: Force an immediate resize calculation as soon as the model loads
+          // This prevents the "0 height" bug on initial load
+          handleResize(renderer, camera, canvasDiv, character);
+
           progress.loaded().then(() => {
             setTimeout(() => {
               light.turnOnLights();
               animations.startIntro();
             }, 2500);
           });
+          
           window.addEventListener("resize", () =>
             handleResize(renderer, camera, canvasDiv, character)
           );
@@ -81,6 +88,7 @@ const Scene = () => {
       const onMouseMove = (event: MouseEvent) => {
         handleMouseMove(event, (x, y) => (mouse = { x, y }));
       };
+      
       let debounce: number | undefined;
       const onTouchStart = (event: TouchEvent) => {
         const element = event.target as HTMLElement;
@@ -101,13 +109,20 @@ const Scene = () => {
       document.addEventListener("mousemove", (event) => {
         onMouseMove(event);
       });
+      
       const landingDiv = document.getElementById("landingDiv");
       if (landingDiv) {
         landingDiv.addEventListener("touchstart", onTouchStart);
         landingDiv.addEventListener("touchend", onTouchEnd);
       }
+
+      // 🟢 FIX 2a: Declare a variable to store the animation frame ID
+      let animationFrameId: number;
+
       const animate = () => {
-        requestAnimationFrame(animate);
+        // 🟢 FIX 2b: Assign the ID every time the frame is requested
+        animationFrameId = requestAnimationFrame(animate);
+        
         if (headBone) {
           handleHeadRotation(
             headBone,
@@ -125,8 +140,13 @@ const Scene = () => {
         }
         renderer.render(scene, camera);
       };
+      
       animate();
+
       return () => {
+        // 🟢 FIX 2c: Cancel the animation loop when the component unmounts
+        cancelAnimationFrame(animationFrameId);
+        
         clearTimeout(debounce);
         scene.clear();
         renderer.dispose();
