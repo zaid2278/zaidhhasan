@@ -19,8 +19,6 @@ const Scene = () => {
   const sceneRef = useRef(new THREE.Scene());
   const { setLoading } = useLoading();
 
-  const [character, setChar] = useState<THREE.Object3D | null>(null);
-
   useEffect(() => {
     if (canvasDiv.current) {
       let rect = canvasDiv.current.getBoundingClientRect();
@@ -63,7 +61,6 @@ const Scene = () => {
           hoverDivRef.current && animations.hover(gltf, hoverDivRef.current);
           mixer = animations.mixer;
           let loadedCharacter = gltf.scene;
-          setChar(loadedCharacter);
           scene.add(loadedCharacter);
           headBone = loadedCharacter.getObjectByName("spine006") || null;
           screenLight = loadedCharacter.getObjectByName("screenlight") || null;
