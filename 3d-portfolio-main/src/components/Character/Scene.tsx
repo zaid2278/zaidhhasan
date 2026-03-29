@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import setCharacter from "./utils/character";
 import setLighting from "./utils/lighting";
@@ -18,6 +18,8 @@ const Scene = () => {
   const hoverDivRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef(new THREE.Scene());
   const { setLoading } = useLoading();
+
+  const [character, setChar] = useState<THREE.Object3D | null>(null);
 
   useEffect(() => {
     if (canvasDiv.current) {
@@ -45,9 +47,6 @@ const Scene = () => {
       let headBone: THREE.Object3D | null = null;
       let screenLight: any | null = null;
       let mixer: THREE.AnimationMixer;
-      
-      // 🟢 FIX 1a: Initialize the ResizeObserver
-      let resizeObserver: ResizeObserver;
 
       const clock = new THREE.Clock();
 
@@ -60,13 +59,16 @@ const Scene = () => {
           const animations = setAnimations(gltf);
           hoverDivRef.current && animations.hover(gltf, hoverDivRef.current);
           mixer = animations.mixer;
-          let loadedCharacter = gltf.scene;
-          scene.add(loadedCharacter);
-          headBone = loadedCharacter.getObjectByName("spine006") || null;
-          screenLight = loadedCharacter.getObjectByName("screenlight") || null;
+          let character = gltf.scene;
+          setChar(character);
+          scene.add(character);
+          headBone = character.getObjectByName("spine006") || null;
+          screenLight = character.getObjectByName("screenlight") || null;
 
-          // Force an immediate calculation on load
-          handleResize(renderer, camera, canvasDiv, loadedCharacter);
+          // THE MAGIC TRICK: Fake a window resize to force the 3D model to appear!
+          setTimeout(() => {
+            window.dispatchEvent(new Event("resize"));
+          }, 100);
 
           progress.loaded().then(() => {
             setTimeout(() => {
@@ -75,14 +77,9 @@ const Scene = () => {
             }, 2500);
           });
           
-          // 🟢 FIX 1b: Attach the ResizeObserver to watch the parent div
-          resizeObserver = new ResizeObserver(() => {
-            handleResize(renderer, camera, canvasDiv, loadedCharacter);
-          });
-
-          if (canvasDiv.current) {
-            resizeObserver.observe(canvasDiv.current);
-          }
+          window.addEventListener("resize", () =>
+            handleResize(renderer, camera, canvasDiv, character)
+          );
         }
       });
 
@@ -120,12 +117,10 @@ const Scene = () => {
         landingDiv.addEventListener("touchend", onTouchEnd);
       }
 
-      // 🟢 FIX 2: Memory Leak Prevention for RequestAnimationFrame
       let animationFrameId: number;
 
       const animate = () => {
         animationFrameId = requestAnimationFrame(animate);
-        
         if (headBone) {
           handleHeadRotation(
             headBone,
@@ -147,18 +142,13 @@ const Scene = () => {
       animate();
 
       return () => {
-        // 🟢 FIX 2 Cleanup
         cancelAnimationFrame(animationFrameId);
-        
         clearTimeout(debounce);
         scene.clear();
         renderer.dispose();
-        
-        // 🟢 FIX 1c: Disconnect the ResizeObserver safely
-        if (resizeObserver) {
-          resizeObserver.disconnect();
-        }
-
+        window.removeEventListener("resize", () =>
+          handleResize(renderer, camera, canvasDiv, character!)
+        );
         if (canvasDiv.current) {
           canvasDiv.current.removeChild(renderer.domElement);
         }
