@@ -32,6 +32,7 @@
   width: 100%;
   border-top: 1px solid #363636;
   border-bottom: 1px solid #363636;
+  position: relative;
 }
 
 .carousel-track {
@@ -41,10 +42,13 @@
 }
 
 .carousel-slide {
-  min-width: 100%;
-  flex-shrink: 0;
+  /* One slide = full width of the track container; fixed basis so neighboring slides never peek through */
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
   box-sizing: border-box;
   padding: 50px 0;
+  overflow: hidden;
 }
 
 .carousel-content {
@@ -52,10 +56,13 @@
   align-items: center;
   gap: 60px;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .carousel-info {
   flex: 1;
+  min-width: 0;
   display: flex;
   gap: 30px;
   align-items: flex-start;
@@ -109,6 +116,7 @@
 
 .carousel-image-wrapper {
   flex: 1;
+  min-width: 0;
   display: flex;
   justify-content: center;
   align-items: center;
