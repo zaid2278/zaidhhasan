@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useLayoutEffect } from "react";
 import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
@@ -51,6 +51,21 @@ const projects: Project[] = [
 const Work = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [viewportWidth, setViewportWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const sync = () => setViewportWidth(el.getBoundingClientRect().width);
+    sync();
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width;
+      if (w !== undefined) setViewportWidth(w);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const goToSlide = useCallback(
     (index: number) => {
@@ -101,15 +116,31 @@ const Work = () => {
           </button>
 
           {/* Slides */}
-          <div className="carousel-track-container">
+          <div className="carousel-track-container" ref={viewportRef}>
             <div
               className="carousel-track"
               style={{
-                transform: `translateX(-${(currentIndex * 100) / projects.length}%)`,
+                transform:
+                  viewportWidth > 0
+                    ? `translate3d(-${currentIndex * viewportWidth}px, 0, 0)`
+                    : undefined,
               }}
             >
               {projects.map((project, index) => (
-                <div className="carousel-slide" key={index}>
+                <div
+                  className="carousel-slide"
+                  key={project.title}
+                  style={
+                    viewportWidth > 0
+                      ? {
+                          flex: "0 0 auto",
+                          width: viewportWidth,
+                          minWidth: viewportWidth,
+                          maxWidth: viewportWidth,
+                        }
+                      : undefined
+                  }
+                >
                   <div className="carousel-content">
                     <div className="carousel-info">
                       <div className="carousel-number">
