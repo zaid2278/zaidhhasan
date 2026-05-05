@@ -15,6 +15,14 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "Medical Management Web Application",
+    category: "Medical Management",
+    tools: "ColdFusion, MS SQL, HTML, React (vite), JavaScript",
+    image: "/images/medicalmanagement.png",
+    link: "https://github.com/zaid2278",
+    githubIcon: true,
+  },
+  {
     title: "CareerOS",
     category: "Job Application Tracker",
     tools: "React.js, Node.js, PostgreSQL, OpenAI API, Cloudflare, Sentry",
