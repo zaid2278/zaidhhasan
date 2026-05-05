@@ -33,7 +33,7 @@ const Career = () => {
               <h3>Jan 2026 - May 2026</h3>
             </div>
             <p>
-              Developed a secure Medical Management Web Application to streamline patient-doctor interactions, utilizing ColdFusion, MS SQL, HTML, CSS, and JavaScript.
+              Developed a secure Medical Management Web Application to streamline patient-doctor interactions, utilizing ColdFusion, MS SQL, HTML, React (vite), and JavaScript.
             </p>
           </div>
           <div className="career-info-box">

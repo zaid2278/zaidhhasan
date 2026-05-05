@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { MdArrowOutward } from "react-icons/md";
+import { FaGithub } from "react-icons/fa";
 
 interface Props {
   image: string;
   alt?: string;
   video?: string;
   link?: string;
+  githubIcon?: boolean;
 }
 
 const WorkImage = (props: Props) => {
@@ -29,11 +31,12 @@ const WorkImage = (props: Props) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={() => setIsVideo(false)}
         target="_blank"
+        rel="noreferrer"
         data-cursor={"disable"}
       >
         {props.link && (
           <div className="work-link">
-            <MdArrowOutward />
+            {props.githubIcon ? <FaGithub aria-hidden /> : <MdArrowOutward />}
           </div>
         )}
         <img src={props.image} alt={props.alt} />

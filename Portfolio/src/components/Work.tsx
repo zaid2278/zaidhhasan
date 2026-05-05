@@ -3,13 +3,24 @@ import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
-const projects = [
+type Project = {
+  title: string;
+  category: string;
+  tools: string;
+  image: string;
+  link: string;
+  /** Show GitHub icon on the image link badge instead of the arrow */
+  githubIcon?: boolean;
+};
+
+const projects: Project[] = [
   {
     title: "CareerOS",
     category: "Job Application Tracker",
     tools: "React.js, Node.js, PostgreSQL, OpenAI API, Cloudflare, Sentry",
     image: "/images/careeros.png",
     link: "https://github.com/zaid2278",
+    githubIcon: true,
   },
   {
     title: "Admin Dashboard",
@@ -17,6 +28,7 @@ const projects = [
     tools: "Java, JavaFX, MySQL Database",
     image: "/images/admindashboard.png",
     link: "https://github.com/zaid2278",
+    githubIcon: true,
   },
   {
     title: "Marine Navigation System",
@@ -24,6 +36,7 @@ const projects = [
     tools: "Microsoft Maps API, Marine Traffic API, PHP, HTML, CSS, SQL, JavaScript",
     image: "/images/marinenavigation.png",
     link: "https://github.com/zaid2278",
+    githubIcon: true,
   },
 ];
 
@@ -110,6 +123,7 @@ const Work = () => {
                         image={project.image}
                         alt={project.title}
                         link={project.link}
+                        githubIcon={project.githubIcon}
                       />
                     </div>
                   </div>
