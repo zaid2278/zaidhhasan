@@ -324,17 +324,10 @@ h2.landing-info-h2 {
 
 @media screen and (min-width: 1025px) {
   .character-model {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: auto;
-    bottom: 0;
-    width: 48vw;
-    max-width: 900px;
     height: 100vh;
-    transform: none;
-    z-index: 0;
-    pointer-events: none;
+    bottom: 0;
+    z-index: 11;
+    position: fixed;
   }
 
   .character-model::after,
