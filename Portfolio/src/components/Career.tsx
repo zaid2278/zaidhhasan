@@ -18,7 +18,7 @@ const Career = () => {
                 <h4>Student Assistant</h4>
                 <h5>NJIT Digital Learning and Campus Support</h5>
               </div>
-              <h3>Jan 2024 - Present</h3>
+              <h3>Jan 2024 - May 2026</h3>
             </div>
             <p>
               Collaborate closely with full-time staff to optimize operations at the Information Services & Technology Desk, ensuring expedited resolution of user needs.
