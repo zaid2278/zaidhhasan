@@ -31,7 +31,7 @@ const Contact = () => {
             </p>
             <h4>Education</h4>
             <p>
-              BS Computer Science, New Jersey Institute of Technology — Expected May 2026
+              BS Computer Science, New Jersey Institute of Technology — Graduated May 2026
             </p>
           </div>
           <div className="contact-box">
