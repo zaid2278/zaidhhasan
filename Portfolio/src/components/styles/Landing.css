@@ -145,6 +145,27 @@
   position: absolute;
 }
 
+/* On mobile the model lives inside the landing section. Clip the section so the
+   model's masking pseudo-elements (::before is a 700px solid block, ::after a
+   gradient) can't bleed down and cover the About section below. */
+@media only screen and (max-width: 1024px) {
+  .landing-section {
+    overflow: hidden;
+  }
+  .character-model::before {
+    display: none;
+  }
+  .about-section,
+  .whatIDO,
+  .career-section,
+  .work-section,
+  .contact-section {
+    position: relative;
+    z-index: 10;
+    background-color: var(--backgroundColor);
+  }
+}
+
 .character-loaded .character-rim {
   animation: backlight 3s forwards;
   animation-delay: 0.3s;

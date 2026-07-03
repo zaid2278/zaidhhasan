@@ -38,6 +38,13 @@ const Scene = () => {
       renderer.toneMappingExposure = 1;
       canvasDiv.current.appendChild(renderer.domElement);
 
+      // Allow the browser to restore the WebGL context if it is lost (common on
+      // mobile / when the GPU is under pressure). Without preventDefault the
+      // context is lost permanently and the model disappears.
+      const glCanvas = renderer.domElement;
+      const handleContextLost = (event: Event) => event.preventDefault();
+      glCanvas.addEventListener("webglcontextlost", handleContextLost, false);
+
       const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
       camera.position.z = 10;
       camera.position.set(0, 13.1, 24.7);
@@ -144,6 +151,7 @@ const Scene = () => {
       return () => {
         cancelAnimationFrame(animationFrameId);
         clearTimeout(debounce);
+        glCanvas.removeEventListener("webglcontextlost", handleContextLost);
         scene.clear();
         renderer.dispose();
         window.removeEventListener("resize", () =>

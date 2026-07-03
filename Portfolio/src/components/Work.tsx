@@ -37,7 +37,7 @@ const projects: Project[] = [
     category: "Real-time Ocean Mapping",
     tools:
       "Microsoft Maps API, Marine Traffic API, PHP, HTML, CSS, SQL, JavaScript",
-    image: "/images/marinenavigation.png",
+    image: "/images/placeholder.webp",
     link: "https://github.com/zaid2278",
     githubIcon: true,
   },

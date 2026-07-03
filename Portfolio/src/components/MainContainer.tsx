@@ -22,7 +22,16 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       setSplitText();
       setIsDesktopView(window.innerWidth > 1024);
     };
-    resizeHandler();
+
+    // Run the initial text split only after web fonts are ready so SplitText
+    // measures the final glyphs (avoids "SplitText called before fonts loaded"
+    // and layout shift/overlap).
+    if (document.fonts && document.fonts.status !== "loaded") {
+      document.fonts.ready.then(resizeHandler);
+    } else {
+      resizeHandler();
+    }
+
     window.addEventListener("resize", resizeHandler);
     return () => {
       window.removeEventListener("resize", resizeHandler);
