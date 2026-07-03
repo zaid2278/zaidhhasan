@@ -364,3 +364,47 @@
     line-height: 6.8rem;
   }
 }
+
+/* Touch phones have no hover, so let the cards flow at their natural height with
+   all content visible. Fixed heights + hover-collapse caused the cards to
+   overflow and overlap the Career section. */
+@media only screen and (max-width: 900px) {
+  .whatIDO {
+    min-height: auto;
+  }
+  .what-box:last-child {
+    height: auto;
+  }
+  .what-box-in {
+    height: auto;
+    margin-left: 0;
+    width: 100%;
+    gap: 24px;
+    padding-bottom: 20px;
+  }
+  .what-content {
+    width: 100%;
+    height: auto;
+    padding: 24px 28px;
+  }
+  /* Always reveal the full card content (no hover on touch) */
+  .what-content h5,
+  .what-content-flex {
+    opacity: 1;
+  }
+  .what-noTouch:hover,
+  .what-content-active,
+  .what-noTouch:hover ~ .what-content,
+  .what-box-in:hover .what-noTouch:not(:hover),
+  .what-content.what-sibling {
+    padding: 24px 28px;
+    min-height: 0;
+  }
+  .what-content-in {
+    height: auto;
+    overflow: visible;
+  }
+  .what-arrow {
+    display: none;
+  }
+}
