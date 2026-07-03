@@ -90,16 +90,16 @@ const WhatIDo = () => {
               <h3>Full-Stack Development</h3>
               <h4>Building responsive and scalable web applications.</h4>
               <p>
-                I have experience in both front-end and back-end development, building applications from the ground up.
+                I build full-stack applications with React, TypeScript, Node.js, NestJS, and RESTful APIs—from UI prototypes to production-ready backends.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
                 <div className="what-tags">Java</div>
                 <div className="what-tags">Python</div>
-                <div className="what-tags">JavaScript</div>
+                <div className="what-tags">TypeScript</div>
                 <div className="what-tags">React.js</div>
                 <div className="what-tags">Node.js</div>
-                <div className="what-tags">HTML/CSS</div>
+                <div className="what-tags">NestJS</div>
               </div>
               <div className="what-arrow"></div>
             </div>
@@ -126,7 +126,7 @@ const WhatIDo = () => {
               <h3>AI/ML & Data Analytics</h3>
               <h4>Leveraging data to build intelligent systems.</h4>
               <p>
-                I have a strong foundation in AI, Machine Learning, and Data Visualization, with hands-on experience in building data-driven solutions.
+                I work with machine learning libraries, LLM tooling, and data visualization platforms to turn raw data into actionable insights.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
@@ -134,6 +134,7 @@ const WhatIDo = () => {
                 <div className="what-tags">Pandas</div>
                 <div className="what-tags">NumPy</div>
                 <div className="what-tags">OpenAI API</div>
+                <div className="what-tags">Llama 3.1</div>
                 <div className="what-tags">Tableau</div>
                 <div className="what-tags">Power BI</div>
               </div>
@@ -162,16 +163,16 @@ const WhatIDo = () => {
               <h3>Cloud & DevOps</h3>
               <h4>Deploying and managing scalable applications.</h4>
               <p>
-                I have experience with cloud platforms and DevOps tools to ensure applications are reliable and performant.
+                I deploy and operate scalable systems on AWS and Azure with Docker, Redis, and modern DevOps workflows.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
-                <div className="what-tags">Azure</div>
+                <div className="what-tags">Docker</div>
                 <div className="what-tags">AWS</div>
+                <div className="what-tags">Azure</div>
                 <div className="what-tags">Oracle Cloud (OCI)</div>
+                <div className="what-tags">PostgreSQL</div>
                 <div className="what-tags">Cloudflare</div>
-                <div className="what-tags">GitHub</div>
-                <div className="what-tags">JIRA</div>
               </div>
               <div className="what-arrow"></div>
             </div>

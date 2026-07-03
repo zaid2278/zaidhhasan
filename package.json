@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix Portfolio",
+    "build": "npm run build --prefix Portfolio",
+    "preview": "npm run preview --prefix Portfolio",
+    "lint": "npm run lint --prefix Portfolio"
+  }
+}

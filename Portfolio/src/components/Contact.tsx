@@ -31,8 +31,13 @@ const Contact = () => {
             </p>
             <h4>Education</h4>
             <p>
-              BS Computer Science, New Jersey Institute of Technology — Graduated May 2026
+              BS Computer Science, New Jersey Institute of Technology — May 2026
+              (GPA 3.37)
             </p>
+            <p>Emerson, NJ </p>
+            <h4>Certifications</h4>
+            <p>Oracle Cloud Infrastructure 2025 AI Foundations Associate</p>
+            <p>Power BI and Tableau for Data Visualization</p>
           </div>
           <div className="contact-box">
             <h4>Social</h4>

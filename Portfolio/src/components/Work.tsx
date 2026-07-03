@@ -15,9 +15,10 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "Medical Management Web Application",
-    category: "Medical Management",
-    tools: "ColdFusion, MS SQL, HTML, React (vite), JavaScript",
+    title: "Medication Management Web Application",
+    category: "Healthcare Platform · RDE Systems",
+    tools:
+      "React, Adobe ColdFusion REST API, Azure SQL, JWT, bcrypt, role-based access control",
     image: "/images/medicalmanagement.png",
     link: "https://github.com/zaid2278",
     githubIcon: true,
@@ -25,23 +26,17 @@ const projects: Project[] = [
   {
     title: "CareerOS",
     category: "Job Application Tracker",
-    tools: "React.js, Node.js, PostgreSQL, OpenAI API, Cloudflare, Sentry",
+    tools:
+      "React.js, Node.js, PostgreSQL, OpenAI API, Cloudflare, Sentry, lazy loading, code splitting",
     image: "/images/careeros.png",
     link: "https://github.com/zaid2278",
     githubIcon: true,
   },
   {
-    title: "Admin Dashboard",
-    category: "Data Visualization",
-    tools: "Java, JavaFX, MySQL Database",
-    image: "/images/admindashboard.png",
-    link: "https://github.com/zaid2278",
-    githubIcon: true,
-  },
-  {
     title: "Marine Navigation System",
-    category: "Real-time Ship Tracking",
-    tools: "Microsoft Maps API, Marine Traffic API, PHP, HTML, CSS, SQL, JavaScript",
+    category: "Real-time Ocean Mapping",
+    tools:
+      "Microsoft Maps API, Marine Traffic API, PHP, HTML, CSS, SQL, JavaScript",
     image: "/images/marinenavigation.png",
     link: "https://github.com/zaid2278",
     githubIcon: true,
